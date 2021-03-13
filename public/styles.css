@@ -51,14 +51,25 @@ h3{
 .content{
   margin-left: 20px;
 }
-/* index styles */
-.blogs a{
+/*Blog index styles */
+.blogs a {
   display: block;
   margin: 40px 0;
   padding-left: 30px;
   border-left: 6px solid crimson;
 }
 .blogs a:hover h3{
+  color: crimson;
+}
+
+/*Book index styles */
+.books a {
+  display: block;
+  margin: 40px 0;
+  padding-left: 30px;
+  border-left: 6px solid rgb(173, 20, 220);
+}
+.books a:hover h3{
   color: crimson;
 }
 

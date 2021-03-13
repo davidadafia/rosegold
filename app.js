@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const { render } = require('ejs');
 const blogRoutes = require('./routes/blogRoutes');
-
+const bookRoutes = require('./routes/bookRoutes');
 //express app
 const app = express();
 
@@ -52,7 +52,7 @@ app.get('/all-blogs', (req, res) => {
   });
 
   app.get('/single-blog', (req, res) => {
-    Blog.findById('60358a1f62669d36ccdbe378')
+    Blog.findById()
       .then(result => {
         res.send(result);
       })
@@ -61,25 +61,62 @@ app.get('/all-blogs', (req, res) => {
       });
   });
 
+//books route
+app.get('/add-book', (req, res) => {
+  const book = new Book({
+      title: 'new book2',
+      snippet: 'about my love for Rosie and Christ',
+      body: 'Plenty plenty and some more'
+  });
+
+  book.save()
+  .then(result => {
+    res.send(result);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+})
+
+app.get('/all-books', (req, res) => {
+  Book.find()
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.get('/single-book', (req, res) => {
+  Book.findById()
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 app.get('/', (req, res) => {
-    res.redirect('/blogs')
+  res.render('home', { title: 'home'});
 });
 
 app.get('/about', (req, res) => {
-    //res.send('<h1> home rosie</h1>');
     res.render('about', { title: 'Milady'});
 });
 
+app.get('/tutor', (req, res) => {
+  res.render('tutor/games', { title: 'Learn'});
+});
 
-app.get('head', (req, res) => {
-    res.render('head', { title: 'Babe'});
-})
+
 
 // blog routes
 app.use('/blogs', blogRoutes);
 
+app.use('/books', bookRoutes);
 // 404 page
 app.use((req, res) => {
-    
     res.status(404).render('404', { title: 'Babe' });
 });
